@@ -1,0 +1,291 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Basic meta tags for character encoding and responsive design -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Our Partners - intoAfrica Racing</title>
+    <!-- External CSS libraries from CDN -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.5/font/bootstrap-icons.min.css" rel="stylesheet">
+    <!-- Custom CSS files loaded using Django's static files system -->
+    <link href="{% static 'css/style.css' %}" rel="stylesheet">
+    <!-- Sponsors-specific stylesheet for custom styling -->
+    <link href="{% static 'css/sponsors.css' %}" rel="stylesheet">
+</head>
+<body>
+    <!-- Navigation bar - sticky-top keeps it fixed at the top when scrolling -->
+    <nav class="navbar navbar-expand-lg navbar-dark sticky-top">
+        <div class="container">
+            <!-- Brand logo with link to homepage -->
+            <a class="navbar-brand" href="{% url 'index' %}">
+                <img src="{% static 'images/intoAfrica-logo.png' %}" alt="Into Africa Racing" height="65">
+            </a>
+            <!-- Mobile menu toggle button - appears on small screens -->
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <!-- Navigation links container - collapses on mobile -->
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <!-- ms-auto pushes the menu to the right side -->
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'index' %}">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'about' %}">About</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'team' %}">Team</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'gallery' %}">Gallery</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'news' %}">News</a>
+                    </li>
+                    <!-- 'active' class highlights the current page in the navigation -->
+                    <li class="nav-item">
+                        <a class="nav-link active" href="{% url 'index' %}">Sponsors</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'contact' %}">Contact</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    
+    <!-- Page Header - contains page title and breadcrumb navigation -->
+    <section class="page-header">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <h1>Our Partners</h1>
+                    <!-- Breadcrumb navigation for better user orientation -->
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="{% url 'index' %}">Home</a></li>
+                            <li class="breadcrumb-item active" aria-current="page">Partners</li>
+                        </ol>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Partnership Introduction Section - explains the importance of sponsors -->
+    <section class="partnership-intro">
+        <div class="container">
+            <!-- Centered content with reduced width on larger screens -->
+            <div class="row justify-content-center">
+                <div class="col-lg-8 text-center">
+                    <h2>Driving African Motorsport Forward Together</h2>
+                    <!-- Lead paragraph with larger text for emphasis -->
+                    <p class="lead">Our success is built on strong partnerships with organizations that share our vision for African motorsport. Each partner plays a unique and vital role in our racing journey.</p>
+                    <p>The combined expertise of our partners provide the resources and collaboration that allow us to compete at the highest levels while developing African talent and promoting the continent on the global stage.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Primary Partner Section - showcases the main sponsor in a larger format -->
+    <section class="primary-partner">
+        <div class="container">
+            <div class="partner-showcase">
+                <!-- Two-column layout using Bootstrap grid system -->
+                <div class="row align-items-center">
+                    <!-- Left column - large logo display (takes 5/12 columns on large screens) -->
+                    <div class="col-lg-5">
+                        <div class="partner-logo-container">
+                            <img src="{% static 'images/wurth-logo.jpg' %}" alt="Wurth South Africa" class="img-fluid" >
+                        </div>
+                    </div>
+                    <!-- Right column - sponsor details (takes 7/12 columns on large screens) -->
+                    <div class="col-lg-7">
+                        <div class="partner-details">
+                            <h3>Würth South Africa</h3>
+                            <!-- Role/classification of the sponsor -->
+                            <div class="partner-role">Main Partner</div>
+                            <p>Würth South Africa specializes in providing a wide range of products and services, focusing on the automotive, construction, and industrial sectors. They offer tools, fasteners, adhesives, and electrical supplies, serving both professionals and businesses.</p>
+                            <p>With a strong emphasis on quality and reliability, Würth South Africa delivers solutions for maintenance, repair, and construction projects. Their products include everything from hand tools to safety equipment, catering to a diverse range of industries.</p>
+                            <p>In addition to their product offerings, Würth South Africa provides technical expertise and customer service to help businesses optimize their operations and ensure that their projects are completed efficiently and safely.</p>
+                            <!-- External link to sponsor website with icon -->
+                            <a href="https://www.wurth.co.za" target="_blank" class="partner-link">Visit Partner Website <i class="bi bi-box-arrow-up-right"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Technical Partners Section - grid layout of secondary sponsors -->
+    <section class="partners-section technical-partners">
+        <div class="container">
+            <h2 class="section-title">Technical Partners</h2>
+            
+            <div class="partner-row">
+                <!-- Grid layout for partner cards -->
+                <div class="row">
+                    <!-- Technical Partner 1 - each partner card takes half width on large screens -->
+                    <div class="col-lg-6 mb-4">
+                        <div class="partner-card">
+                            <!-- Two-column layout inside each card -->
+                            <div class="row g-0 align-items-center">
+                                <!-- Left column - logo (takes 4/12 columns on medium screens) -->
+                                <div class="col-md-4">
+                                    <div class="partner-logo">
+                                        <img src="{% static 'images/omp-logo.png' %}" alt="Partner" class="img-fluid">
+                                    </div>
+                                </div>
+                                <!-- Right column - content (takes 8/12 columns on medium screens) -->
+                                <div class="col-md-8">
+                                    <div class="partner-content">
+                                        <h3>OMP Racing</h3>
+                                        <div class="partner-role"> Equipment </div>
+                                        <p>OMP Racing specializes in high-quality motorsport equipment, providing innovative solutions for driver safety, vehicle performance, and ergonomics at all levels of racing.</p>
+                                        <a href="https://www.ompracing.com" class="partner-link">Visit Partner Website <i class="bi bi-box-arrow-up-right"></i></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Technical Partner 2 - same layout structure as Partner 1 -->
+                    <div class="col-lg-6 mb-4">
+                        <div class="partner-card">
+                            <div class="row g-0 align-items-center">
+                                <div class="col-md-4">
+                                    <div class="partner-logo">
+                                        <img src="{% static 'images/dunlop-tires.png' %}" alt="Velocity Dynamics" class="img-fluid">
+                                    </div>
+                                </div>
+                                <div class="col-md-8">
+                                    <div class="partner-content">
+                                        <h3>Dunlop Tires</h3>
+                                        <div class="partner-role"> Equipment </div>
+                                        <p>Dunlop Tyres is a leading manufacturer of high-performance tyres, offering innovative solutions for motorsport, automotive, and commercial applications, ensuring safety, durability, and optimal performance.</p>
+                                        <a href="https://www.dunloptyres.co.za" class="partner-link">Visit Partner Website <i class="bi bi-box-arrow-up-right"></i></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Technical Partner 3 - same layout structure as previous partners -->
+                    <div class="col-lg-6 mb-4">
+                        <div class="partner-card">
+                            <div class="row g-0 align-items-center">
+                                <div class="col-md-4">
+                                    <div class="partner-logo">
+                                        <img src="{% static 'images/ART-Logo.png' %}" alt="SaharaComp" class="img-fluid">
+                                    </div>
+                                </div>
+                                <div class="col-md-8">
+                                    <div class="partner-content">
+                                        <h3>Africa Race Together</h3>
+                                        <div class="partner-role">Development Program</div>
+                                        <p>Africa Race Together (ART), founded by Xolile Letlaka, is a non-profit initiative focused on developing motorsport in Africa through sustainable investment in talent, communities, events, and organizations to thrive in the international motorsport arena.</p>
+                                        <a href="https://art-foundation.org" class="partner-link">Visit Partner Website <i class="bi bi-box-arrow-up-right"></i></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Technical Partner 4 - same layout structure as previous partners -->
+                    <div class="col-lg-6 mb-4">
+                        <div class="partner-card">
+                            <div class="row g-0 align-items-center">
+                                <div class="col-md-4">
+                                    <div class="partner-logo">
+                                        <img src="{% static 'images/SAES-logo.png' %}" alt="Biofuel Africa" class="img-fluid">
+                                    </div>
+                                </div>
+                                <div class="col-md-8">
+                                    <div class="partner-content">
+                                        <h3>South African Endurance Series</h3>
+                                        <div class="partner-role">Event Organizer</div>
+                                        <p>The South African Endurance Series is a premier motorsport championship showcasing endurance racing, featuring top teams and drivers competing in long-distance events across South Africa.</p>
+                                        <a href="https://www.saeseries.com" class="partner-link">Visit Partner Website <i class="bi bi-box-arrow-up-right"></i></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+
+    <!-- Footer - contains company info, navigation links, and contact info -->
+    <footer class="footer">
+        <div class="container">
+            <div class="row">
+                <!-- Company info and social media section - takes 4 columns on large screens -->
+                <div class="col-lg-4 footer-section mb-4">
+                    <div class="footer-about">
+                        <!-- Stylized logo in footer with different colored text parts -->
+                        <div class="logo footer-logo">
+                            <span class="logo-into">into</span><span class="logo-africa">Africa</span> Racing
+                        </div>
+                        <p>Pioneering African motorsport excellence through innovation, talent development, and community engagement. From rally to circuit racing, we represent the future of racing in Africa.</p>
+                        <!-- Social media links with icons -->
+                        <div class="social-links">
+                            <a href="https://www.facebook.com/p/Into-Africa-Racing-61553970164368/?locale=en_GB" class="social-icon"><i class="bi bi-facebook"></i></a>
+                            <a href="https://www.instagram.com/intoafricaracing?igsh=MXFrNGE2dHBwOHlwNQ==" class="social-icon"><i class="bi bi-instagram"></i></a>
+                            <a href="https://www.youtube.com/@saesracing" class="social-icon"><i class="bi bi-youtube"></i></a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Site navigation links - takes 2 columns on large screens -->
+                <div class="col-md-4 col-lg-2 footer-section mb-4">
+                    <h3 class="footer-title">Navigation</h3>
+                    <ul class="footer-links">
+                        <li><a href="{% url 'index' %}">Home</a></li>
+                        <li><a href="{% url 'about' %}">About</a></li>
+                        <li><a href="{% url 'team' %}">Team</a></li>
+                        <li><a href="{% url 'gallery' %}">Gallery</a></li>
+                        <li><a href="{% url 'news' %}">News</a></li>
+                        <li><a href="{% url 'sponsors' %}">Sponsors</a></li>
+                        <li><a href="{% url 'calendar' %}">Calendar</a></li>
+                        <li><a href="{% url 'contact' %}">Contact</a></li>
+                    </ul>
+                </div>
+
+                
+                <!-- Contact Information section - takes 4 columns on large screens -->
+                <div class="col-md-4 col-lg-4 footer-section mb-4">
+                    <h3 class="footer-title">Contact Us</h3>
+                    <ul class="contact-info">
+                        <li>
+                            <!-- Location icon with address -->
+                            <i class="bi bi-geo-alt contact-icon"></i>
+                            <span>intoAfrica Racing HQ<br>12 Motorsport Avenue<br>Johannesburg, South Africa</span>
+                        </li>
+                        <li>
+                            <!-- Email icon with email address -->
+                            <i class="bi bi-envelope contact-icon"></i>
+                            <span>info@intoafricaracing.com</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <!-- Copyright statement -->
+            <div class="copyright">
+                &copy; 2025 intoAfrica Racing. All Rights Reserved.
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript libraries loaded at the end for better performance -->
+    <!-- Bootstrap Bundle includes both Bootstrap JS and Popper.js required for dropdowns, modals, etc. -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    <!-- Custom JavaScript file loaded using Django's static files system -->
+    <script src="{% static 'js/main.js' %}"></script>
+</body>
+</html>

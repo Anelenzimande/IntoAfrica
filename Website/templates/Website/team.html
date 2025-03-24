@@ -1,0 +1,214 @@
+{% load static %}
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Basic meta tags for character encoding and responsive design -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Our Team - intoAfrica Racing</title>
+    <!-- External CSS libraries from CDN -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.5/font/bootstrap-icons.min.css" rel="stylesheet">
+    <!-- Custom CSS file loaded using Django's static files system -->
+    <link href="{% static 'css/style.css' %}" rel="stylesheet"> 
+</head>
+<body>
+    
+    <!-- Navigation bar - sticky-top keeps it fixed at the top when scrolling -->
+    <nav class="navbar navbar-expand-lg navbar-dark sticky-top">
+        <div class="container">
+            <!-- Brand logo with link to homepage -->
+            <a class="navbar-brand" href="{% url 'index' %}">
+                <img src="{% static 'images/intoAfrica-logo.png' %}" alt="Into Africa Racing" height="65">
+            </a>
+            <!-- Mobile menu toggle button - appears on small screens -->
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <!-- Navigation links container - collapses on mobile -->
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <!-- ms-auto pushes the menu to the right side -->
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'index' %}">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'about' %}">About</a>
+                    </li>
+                    <!-- 'active' class highlights the current page in the navigation -->
+                    <li class="nav-item">
+                        <a class="nav-link active" href="{% url 'team' %}">Team</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'gallery' %}">Gallery</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'news' %}">News</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'sponsors' %}">Sponsors</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'contact' %}">Contact</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    
+    <!-- Page Header - contains page title and breadcrumb navigation -->
+    <section class="page-header">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <h1>Our Team</h1>
+                    <!-- Breadcrumb navigation for better user orientation -->
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="{% url 'index' %}">Home</a></li>
+                            <li class="breadcrumb-item active" aria-current="page">Team</li>
+                        </ol>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+<!-- Team Categories Tabs - interactive tab system to organize team members by department -->
+<section class="sponsors-section team-categories-section">
+    <div class="container">
+        <h2 class="section-title text-center mb-5" style="color: white;">Meet the Team</h2>
+        
+        <!-- Bootstrap Pills Navigation for department tabs -->
+        <ul class="nav nav-pills mb-5 justify-content-center team-nav" id="teamTabs" role="tablist">
+            <!-- Loop through departments data passed from Django view -->
+            {% for data in department_data %}
+            <li class="nav-item" role="presentation">
+                <!-- Nav pill buttons - first one is active by default -->
+                <button class="nav-link {% if forloop.first %}active{% endif %}" 
+                        id="{{ data.department.slug }}-tab" 
+                        data-bs-toggle="pill" 
+                        data-bs-target="#{{ data.department.slug }}" 
+                        type="button" 
+                        role="tab" 
+                        aria-controls="{{ data.department.slug }}" 
+                        aria-selected="{% if forloop.first %}true{% else %}false{% endif %}">
+                    {{ data.department.name }}
+                </button>
+            </li>
+            {% endfor %}
+        </ul>
+        
+        <!-- Tab content panels - content for each department tab -->
+        <div class="tab-content" id="teamTabsContent">
+            {% for data in department_data %}
+            <!-- Individual tab panel for each department -->
+            <div class="tab-pane fade {% if forloop.first %}show active{% endif %}" 
+                 id="{{ data.department.slug }}" 
+                 role="tabpanel" 
+                 aria-labelledby="{{ data.department.slug }}-tab">
+                <!-- Grid layout for team members -->
+                <div class="row">
+                    {% for member in data.members %}
+                    <!-- Team member card - each card takes full width on small screens, half width on medium screens, 
+                         and one-third width on large screens -->
+                    <div class="col-md-6 col-lg-4 mb-4">
+                        <div class="team-card">
+                            <!-- Member photo -->
+                            <div class="team-image">
+                                <img src="{{ member.photo.url }}" alt="{{ member.name }}" class="img-fluid">
+                            </div>
+                            <!-- Member details -->
+                            <div class="team-content">
+                                <h3>{{ member.name }}</h3>
+                                <div class="team-position">{{ member.role }}</div>
+                                <p>{{ member.bio }}</p>
+                                <!-- Skills/expertise tags -->
+                                <div class="team-experience">
+                                    {% for skill in member.skills.all %}
+                                    <span class="experience-tag">{{ skill.name }}</span>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+    
+    
+    <!-- Footer - contains company info, navigation links, and contact info -->
+    <footer class="footer">
+        <div class="container">
+            <div class="row">
+                <!-- Company info and social media section - takes 4 columns on large screens -->
+                <div class="col-lg-4 footer-section mb-4">
+                    <div class="footer-about">
+                        <!-- Stylized logo in footer with different colored text parts -->
+                        <div class="logo footer-logo">
+                            <span class="logo-into">into</span><span class="logo-africa">Africa</span> Racing
+                        </div>
+                        <p>Pioneering African motorsport excellence through innovation, talent development, and community engagement. From rally to circuit racing, we represent the future of racing in Africa.</p>
+                        <!-- Social media links with icons -->
+                        <div class="social-links">
+                            <a href="https://www.facebook.com/p/Into-Africa-Racing-61553970164368/?locale=en_GB" class="social-icon"><i class="bi bi-facebook"></i></a>
+                            <a href="https://www.instagram.com/intoafricaracing?igsh=MXFrNGE2dHBwOHlwNQ==" class="social-icon"><i class="bi bi-instagram"></i></a>
+                            <a href="https://www.youtube.com/@saesracing" class="social-icon"><i class="bi bi-youtube"></i></a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Site navigation links - takes 2 columns on large screens -->
+                <div class="col-md-4 col-lg-2 footer-section mb-4">
+                    <h3 class="footer-title">Navigation</h3>
+                    <ul class="footer-links">
+                        <li><a href="{% url 'index' %}">Home</a></li>
+                        <li><a href="{% url 'about' %}">About</a></li>
+                        <li><a href="{% url 'team' %}">Team</a></li>
+                        <li><a href="{% url 'gallery' %}">Gallery</a></li>
+                        <li><a href="{% url 'news' %}">News</a></li>
+                        <li><a href="{% url 'sponsors' %}">Sponsors</a></li>
+                        <li><a href="{% url 'calendar' %}">Calendar</a></li>
+                        <li><a href="{% url 'contact' %}">Contact</a></li>
+                    </ul>
+                </div>
+                
+                
+                <!-- Contact Information section - takes 4 columns on large screens -->
+                <div class="col-md-4 col-lg-4 footer-section mb-4">
+                    <h3 class="footer-title">Contact Us</h3>
+                    <ul class="contact-info">
+                        <li>
+                            <!-- Location icon with address -->
+                            <i class="bi bi-geo-alt contact-icon"></i>
+                            <span>intoAfrica Racing HQ<br>12 Motorsport Avenue<br>Johannesburg, South Africa</span>
+                        </li>
+                        <li>
+                            <!-- Email icon with email address -->
+                            <i class="bi bi-envelope contact-icon"></i>
+                            <span>info@intoafricaracing.com</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <!-- Copyright statement -->
+            <div class="copyright">
+                &copy; 2025 intoAfrica Racing. All Rights Reserved.
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript libraries loaded at the end for better performance -->
+    <!-- Bootstrap Bundle includes both Bootstrap JS and Popper.js required for dropdowns, modals, etc. -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    <!-- Custom JavaScript file loaded using Django's static files system -->
+    <script src="{% static 'js/main.js' %}"></script>
+</body>
+</html>

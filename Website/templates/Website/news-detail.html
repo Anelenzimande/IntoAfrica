@@ -1,0 +1,229 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Basic meta tags for character encoding and responsive design -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Dynamic page title that includes the article title from database -->
+    <title>{{ article.title }} - intoAfrica Racing</title>
+    <!-- External CSS libraries from CDN -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.5/font/bootstrap-icons.min.css" rel="stylesheet">
+    <!-- Custom CSS files loaded using Django's static files system -->
+    <link href="{% static 'css/style.css' %}" rel="stylesheet">
+    <link href="{% static 'css/news.css' %}" rel="stylesheet">
+    <!-- Specific stylesheet for news article detail pages -->
+    <link href="{% static 'css/news-detail.css' %}" rel="stylesheet">
+</head>
+<body>
+    <!-- Navigation bar - sticky-top keeps it fixed at the top when scrolling -->
+    <nav class="navbar navbar-expand-lg navbar-dark sticky-top">
+        <div class="container">
+            <!-- Brand logo with link to homepage -->
+            <a class="navbar-brand" href="{% url 'index' %}">
+                <img src="{% static 'images/intoAfrica-logo.png' %}" alt="Into Africa Racing" height="65">
+            </a>
+            <!-- Mobile menu toggle button - appears on small screens -->
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <!-- Navigation links container - collapses on mobile -->
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <!-- ms-auto pushes the menu to the right side -->
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'index' %}">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'about' %}">About</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'team' %}">Team</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'gallery' %}">Gallery</a>
+                    </li>
+                    <!-- 'active' class highlights the current news section in the navigation -->
+                    <li class="nav-item">
+                        <a class="nav-link active" href="{% url 'news' %}">News</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'sponsors' %}">Sponsors</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'contact' %}">Contact</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    
+    <!-- Page Header - displays article title and breadcrumb navigation -->
+    <section class="page-header">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <!-- Dynamic article title from database -->
+                    <h1>{{ article.title }}</h1>
+                    <!-- Breadcrumb navigation for better user orientation -->
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="{% url 'index' %}">Home</a></li>
+                            <li class="breadcrumb-item"><a href="{% url 'news' %}">News</a></li>
+                            <!-- Truncated title for breadcrumb if it's too long -->
+                            <li class="breadcrumb-item active" aria-current="page">{{ article.title|truncatechars:30 }}</li>
+                        </ol>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Article Content Section - main content area with the article and sidebar -->
+    <section class="article-section">
+        <div class="container">
+            <!-- Two-column layout using Bootstrap grid system -->
+            <div class="row">
+                <!-- Main column for article content (takes 8/12 columns on large screens) -->
+                <div class="col-lg-8">
+                    <!-- Article Main Content -->
+                    <article class="article-content">
+                        <!-- Article metadata display - date and category -->
+                        <div class="article-meta">
+                            <span class="article-date"><i class="bi bi-calendar3"></i> {{ article.date_published|date:"F j, Y" }}</span>
+                            <span class="article-category"><i class="bi bi-tag"></i> {{ article.category.name }}</span>
+                        </div>
+                        
+                        <!-- Featured image for the article -->
+                        <div class="article-featured-image">
+                            <img src="{{ article.image.url }}" alt="{{ article.title }}" class="img-fluid">
+                        </div>
+                        
+                        <!-- Main article text content - rendered from database -->
+                        <div class="article-body">
+                            <!-- 'safe' filter allows HTML in content, 'linebreaks' converts newlines to paragraphs -->
+                            {{ article.content|safe|linebreaks }}
+                        </div>
+                        
+                        <!-- Social media sharing buttons -->
+                        <div class="article-share">
+                            <span class="share-label">Share this article:</span>
+                            <div class="share-buttons">
+                                <a href="#" class="share-button facebook"><i class="bi bi-facebook"></i></a>
+                                <a href="#" class="share-button twitter"><i class="bi bi-twitter"></i></a>
+                                <a href="#" class="share-button linkedin"><i class="bi bi-linkedin"></i></a>
+                                <a href="#" class="share-button whatsapp"><i class="bi bi-whatsapp"></i></a>
+                            </div>
+                        </div>
+                    </article>
+                </div>
+                
+                <!-- Sidebar column (takes 4/12 columns on large screens) -->
+                <div class="col-lg-4">
+                    <!-- Sidebar with related content -->
+                    <aside class="article-sidebar">
+                        <!-- Related Articles section -->
+                        <div class="sidebar-section">
+                            <h3 class="sidebar-title">Related News</h3>
+                            <!-- Conditional rendering based on whether related articles exist -->
+                            {% if related_articles %}
+                                <!-- Loop through related articles from Django view -->
+                                {% for related in related_articles %}
+                                <div class="related-article">
+                                    <a href="{{ related.get_absolute_url }}">
+                                        <div class="related-image">
+                                            <img src="{{ related.image.url }}" alt="{{ related.title }}" class="img-fluid">
+                                        </div>
+                                        <div class="related-content">
+                                            <h4>{{ related.title }}</h4>
+                                            <div class="related-date">{{ related.date_published|date:"F j, Y" }}</div>
+                                        </div>
+                                    </a>
+                                </div>
+                                {% endfor %}
+                            {% else %}
+                                <!-- Fallback message when no related articles are available -->
+                                <p class="no-related">No related articles found.</p>
+                            {% endif %}
+                        </div>
+                        
+                        <!-- Back to News button -->
+                        <div class="back-to-news">
+                            <a href="{% url 'news' %}" class="btn btn-primary"><i class="bi bi-arrow-left"></i> Back to News</a>
+                        </div>
+                    </aside>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Footer - contains company info, navigation links, and contact info -->
+    <footer class="footer">
+        <div class="container">
+            <div class="row">
+                <!-- Company info and social media section - takes 4 columns on large screens -->
+                <div class="col-lg-4 footer-section mb-4">
+                    <div class="footer-about">
+                        <!-- Stylized logo in footer with different colored text parts -->
+                        <div class="logo footer-logo">
+                            <span class="logo-into">into</span><span class="logo-africa">Africa</span> Racing
+                        </div>
+                        <p>Pioneering African motorsport excellence through innovation, talent development, and community engagement. From rally to circuit racing, we represent the future of racing in Africa.</p>
+                        <!-- Social media links with icons -->
+                        <div class="social-links">
+                            <a href="https://www.facebook.com/p/Into-Africa-Racing-61553970164368/?locale=en_GB" class="social-icon"><i class="bi bi-facebook"></i></a>
+                            <a href="https://www.instagram.com/intoafricaracing?igsh=MXFrNGE2dHBwOHlwNQ==" class="social-icon"><i class="bi bi-instagram"></i></a>
+                            <a href="https://www.youtube.com/@saesracing" class="social-icon"><i class="bi bi-youtube"></i></a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Site navigation links - takes 2 columns on large screens -->
+                <div class="col-md-4 col-lg-2 footer-section mb-4">
+                    <h3 class="footer-title">Navigation</h3>
+                    <ul class="footer-links">
+                        <li><a href="{% url 'index' %}">Home</a></li>
+                        <li><a href="{% url 'about' %}">About</a></li>
+                        <li><a href="{% url 'team' %}">Team</a></li>
+                        <li><a href="{% url 'gallery' %}">Gallery</a></li>
+                        <li><a href="{% url 'news' %}">News</a></li>
+                        <li><a href="{% url 'sponsors' %}">Sponsors</a></li>
+                        <li><a href="{% url 'calendar' %}">Calendar</a></li>
+                        <li><a href="{% url 'contact' %}">Contact</a></li>
+                    </ul>
+                </div>
+                
+                
+                <!-- Contact Information section - takes 4 columns on large screens -->
+                <div class="col-md-4 col-lg-4 footer-section mb-4">
+                    <h3 class="footer-title">Contact Us</h3>
+                    <ul class="contact-info">
+                        <li>
+                            <!-- Location icon with address -->
+                            <i class="bi bi-geo-alt contact-icon"></i>
+                            <span>intoAfrica Racing HQ<br>12 Motorsport Avenue<br>Johannesburg, South Africa</span>
+                        </li>
+                        <li>
+                            <!-- Email icon with email address -->
+                            <i class="bi bi-envelope contact-icon"></i>
+                            <span>info@intoafricaracing.com</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <!-- Copyright statement -->
+            <div class="copyright">
+                &copy; 2025 intoAfrica Racing. All Rights Reserved.
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript libraries loaded at the end for better performance -->
+    <!-- Bootstrap Bundle includes both Bootstrap JS and Popper.js required for dropdowns, modals, etc. -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    <!-- Custom JavaScript file loaded using Django's static files system -->
+    <script src="{% static 'js/main.js' %}"></script>
+</body>
+</html>

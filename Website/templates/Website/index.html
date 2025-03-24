@@ -1,0 +1,323 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Basic meta tags for character encoding and responsive design -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>intoAfrica Racing - African Premier Racing Team</title>
+    <!-- External CSS libraries from CDN -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.5/font/bootstrap-icons.min.css" rel="stylesheet">
+    <!-- Custom CSS file loaded using Django's static files system -->
+    <link href="{% static 'css/style.css' %}" rel="stylesheet"> 
+</head>
+
+<body>
+    <!-- Navigation bar - sticky-top keeps it fixed at the top when scrolling -->
+    <nav class="navbar navbar-expand-lg navbar-dark sticky-top">
+        <div class="container">
+            <!-- Brand logo with link to homepage -->
+            <a class="navbar-brand logo-container" href="{% url 'index' %}">
+                <img src="{% static 'images/intoAfrica-logo.png' %}" alt="Into Africa Racing" height="65">
+            </a>
+            <!-- Mobile menu toggle button - appears on small screens -->
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <!-- Navigation links container - collapses on mobile -->
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <!-- ms-auto pushes the menu to the right side -->
+                <ul class="navbar-nav ms-auto">
+                    <!-- 'active' class highlights the current page in the navigation -->
+                    <li class="nav-item">
+                        <a class="nav-link active" href="{% url 'index' %}">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'about' %}">About</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'team' %}">Team</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'gallery' %}">Gallery</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'news' %}">News</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'sponsors' %}">Sponsors</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'contact' %}">Contact</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    
+    <!-- Hero Section - large banner area with main messaging and call-to-action -->
+    <section class="hero">
+        <!-- Decorative racing stripe element -->
+        <div class="racing-stripe"></div>
+        <!-- Main hero content container -->
+        <div class="container hero-content">
+            <div class="row">
+                <!-- Hero content takes 8/12 columns on large screens, 6/12 on extra-large screens -->
+                <div class="col-lg-8 col-xl-6">
+                    <h1>Dominating African Motorsport</h1>
+                    <p class="lead mb-4">intoAfrica Racing is pushing the boundaries of African motor racing with cutting-edge technology, exceptional talent, and unmatched passion for speed.</p>
+                    <!-- Main call-to-action button -->
+                    <a href="{% url 'team' %}" class="cta-btn">Meet Our Team</a>
+                    
+                    <!-- Next race information - dynamically populated from the backend -->
+                    <div class="upcoming-race mt-4">
+                        {% if next_race %}
+                            <h3>Next Race: {{ next_race.title }}</h3>
+                            <p>
+                                <!-- Conditional date formatting based on whether there's an end date -->
+                                {% if next_race.end_date %}
+                                    {{ next_race.start_date|date:"F j" }}-{{ next_race.end_date|date:"j, Y" }}
+                                {% else %}
+                                    {{ next_race.start_date|date:"F j, Y" }}
+                                {% endif %}
+                                • {{ next_race.location }}
+                            </p>
+                        {% else %}
+                            <!-- Fallback when no race is scheduled -->
+                            <h3>Racing Season</h3>
+                            <p>Stay tuned for our upcoming race schedule!</p>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- About Section - introduces the team history and key statistics -->
+    <section class="about-section">
+        <div class="container">
+            <!-- Two-column layout using Bootstrap grid system -->
+            <div class="row">
+                <!-- Left column - text content (takes 6/12 columns on large screens) -->
+                <div class="col-lg-6">
+                    <div class="about-text">
+                        <h2 class="section-title">Our Racing Heritage</h2>
+                        <p>Founded in 2020, intoAfrica Racing has quickly established itself as the premier racing team on the African continent. With a focus on innovation, talent development, and community engagement, we're pioneering a new era in African motorsport.</p>
+                        <p>Our team blends international expertise with local knowledge, creating a uniquely African approach to racing that has led to unprecedented success across multiple series in circuit racing.</p>
+                        
+                        <!-- Statistics Grid - 2x2 layout of key stats -->
+                        <div class="row mt-5">
+                            <!-- Each stat in its own card - 6/12 columns on all screens -->
+                            <div class="col-6 col-md-6 mb-4">
+                                <div class="stat-box">
+                                    <h4>-</h4>
+                                    <p>Race Victories</p>
+                                </div>
+                            </div>
+                            <div class="col-6 col-md-6 mb-4">
+                                <div class="stat-box">
+                                    <h4>-</h4>
+                                    <p>Championship Titles</p>
+                                </div>
+                            </div>
+                            <div class="col-6 col-md-6">
+                                <div class="stat-box">
+                                    <h4>-</h4>
+                                    <p>Countries Raced</p>
+                                </div>
+                            </div>
+                            <div class="col-6 col-md-6">
+                                <div class="stat-box">
+                                    <h4>-</h4>
+                                    <p>Drivers</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Right column - embedded video (takes 6/12 columns on large screens) -->
+                <div class="col-lg-6">
+                    <div class="video-wrapper">
+                        <!-- Responsive video container with 16:9 aspect ratio -->
+                        <div class="ratio ratio-16x9">
+                            <iframe src="https://www.youtube.com/embed/cyncffxE7o4" title="intoAfrica Racing car in action" allowfullscreen></iframe>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Sponsors Section - displays partner logos with links -->
+    <section class="sponsors-section">
+        <div class="container">
+            <!-- Section header with title and description -->
+            <div class="text-center mb-5">
+                <h2 class="section-title text-center mb-4" style="color: white;">OUR VALUED PARTNERS</h2>
+                <p class="text-center text-white col-md-8 mx-auto">intoAfrica Racing is proud to partner with leading brands that share our vision for excellence and innovation in African motorsport.</p>
+            </div>
+            
+            <!-- Sponsors logo display area -->
+            <div class="sponsors-banner">
+                <!-- Responsive row with centered content -->
+                <div class="row justify-content-center">
+                    <!-- Each sponsor logo in its own column - responsive sizing across different screens -->
+                    <div class="col-6 col-md-4 col-lg-2">
+                        <div class="sponsor-logo">
+                            <a href="https://www.wurth.co.za" target="_blank">
+                                <img src="{% static 'images/wurth-logo.jpg' %}" alt="Würth" class="img-fluid">
+                            </a>
+                        </div>
+                    </div>
+                    <div class="col-6 col-md-4 col-lg-2">
+                        <div class="sponsor-logo">
+                            <a href="https://www.ompracing.com" target="_blank">
+                                <img src="{% static 'images/omp-logo.png' %}" alt="Sponsor 2" class="img-fluid">
+                            </a>
+                        </div>
+                    </div>
+                    <div class="col-6 col-md-4 col-lg-2">
+                        <div class="sponsor-logo">
+                            <a href="https://www.dunloptyres.co.za" target="_blank">
+                                <img src="{% static 'images/dunlop-tires.png' %}" alt="Sponsor 3" class="img-fluid">
+                            </a>
+                        </div>
+                    </div>
+                    <div class="col-6 col-md-4 col-lg-2">
+                        <div class="sponsor-logo">
+                            <a href="https://art-foundation.org" target="_blank">
+                                <img src="{% static 'images/ART-Logo.png' %}" alt="Sponsor 4" class="img-fluid" height="60px">
+                            </a>
+                        </div>
+                    </div>
+                    <div class="col-6 col-md-4 col-lg-2">
+                        <div class="sponsor-logo">
+                            <a href="https://www.saeseries.com" target="_blank">
+                                <img src="{% static 'images/SAES-Logo.png' %}" alt="Sponsor 5" class="img-fluid">
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+    </section>
+    
+    <!-- News Section - displays latest news articles in card format -->
+    <section class="news-section">
+        <div class="container">
+            <h2 class="section-title mb-5">Latest News</h2>
+            <div class="row">
+                <!-- Conditional rendering based on whether news articles exist -->
+                {% if latest_news %}
+                    <!-- Loop through news articles passed from Django view -->
+                    {% for article in latest_news %}
+                    <!-- Each news card takes full width on small screens, half width on medium screens, 
+                         and one-third width on large screens -->
+                    <div class="col-md-6 col-lg-4 mb-4">
+                        <div class="news-card">
+                            <!-- Article featured image -->
+                            <div class="news-image">
+                                <img src="{{ article.image.url }}" alt="{{ article.title }}" class="img-fluid">
+                            </div>
+                            <!-- Article content preview -->
+                            <div class="news-content">
+                                <!-- Formatted publication date -->
+                                <span class="news-date">{{ article.date_published|date:"F j, Y" }}</span>
+                                <h3 class="news-title">{{ article.title }}</h3>
+                                <p class="news-excerpt">{{ article.excerpt }}</p>
+                                <!-- Link to full article with arrow icon -->
+                                <a href="{{ article.get_absolute_url }}" class="read-more">Read More <i class="bi bi-arrow-right"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                    {% else %}
+                    <!-- Fallback message when no news articles are available -->
+                    <div class="col-12 text-center">
+                        <div class="alert alert-info no-content-message" role="alert">
+                            <i class="bi bi-info-circle me-2"></i>
+                            No news articles available at this time.
+                        </div>
+                    </div>
+                {% endif %}
+            </div>
+            
+            <!-- Button to view all news articles -->
+            <div class="text-center mt-4">
+                <a href="{% url 'news' %}" class="btn btn-primary">View All News</a>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Footer - contains company info, navigation links, and contact info -->
+    <footer class="footer">
+        <div class="container">
+            <div class="row">
+                <!-- Company info and social media section - takes 4 columns on large screens -->
+                <div class="col-lg-4 footer-section mb-4">
+                    <div class="footer-about">
+                        <!-- Stylized logo in footer with different colored text parts -->
+                        <div class="logo footer-logo">
+                            <span class="logo-into">into</span><span class="logo-africa">Africa</span> Racing
+                        </div>
+                        <p>Pioneering African motorsport excellence through innovation, talent development, and community engagement. From rally to circuit racing, we represent the future of racing in Africa.</p>
+                        <!-- Social media links with icons -->
+                        <div class="social-links">
+                            <a href="https://www.facebook.com/p/Into-Africa-Racing-61553970164368/?locale=en_GB" class="social-icon"><i class="bi bi-facebook"></i></a>
+                            <a href="https://www.instagram.com/intoafricaracing?igsh=MXFrNGE2dHBwOHlwNQ==" class="social-icon"><i class="bi bi-instagram"></i></a>
+                            <a href="https://www.youtube.com/@saesracing" class="social-icon"><i class="bi bi-youtube"></i></a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Site navigation links - takes 2 columns on large screens -->
+                <div class="col-md-4 col-lg-2 footer-section mb-4">
+                    <h3 class="footer-title">Navigation</h3>
+                    <ul class="footer-links">
+                        <li><a href="{% url 'index' %}">Home</a></li>
+                        <li><a href="{% url 'about' %}">About</a></li>
+                        <li><a href="{% url 'team' %}">Team</a></li>
+                        <li><a href="{% url 'gallery' %}">Gallery</a></li>
+                        <li><a href="{% url 'news' %}">News</a></li>
+                        <li><a href="{% url 'sponsors' %}">Sponsors</a></li>
+                        <li><a href="{% url 'calendar' %}">Calendar</a></li>
+                        <li><a href="{% url 'contact' %}">Contact</a></li>
+                    </ul>
+                </div>
+                
+                
+                
+                <!-- Contact Information section - takes 4 columns on large screens -->
+                <div class="col-md-4 col-lg-4 footer-section mb-4">
+                    <h3 class="footer-title">Contact Us</h3>
+                    <ul class="contact-info">
+                        <li>
+                            <!-- Location icon with address -->
+                            <i class="bi bi-geo-alt contact-icon"></i>
+                            <span>intoAfrica Racing HQ<br>12 Motorsport Avenue<br>Johannesburg, South Africa</span>
+                        </li>
+                        <li>
+                            <!-- Email icon with email address -->
+                            <i class="bi bi-envelope contact-icon"></i>
+                            <span>info@intoafricaracing.com</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <!-- Copyright statement -->
+            <div class="copyright">
+                &copy; 2025 intoAfrica Racing. All Rights Reserved.
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript libraries loaded at the end for better performance -->
+    <!-- Bootstrap Bundle includes both Bootstrap JS and Popper.js required for dropdowns, modals, etc. -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    <!-- Custom JavaScript file loaded using Django's static files system -->
+    <script src="{% static 'js/main.js' %}"></script>
+</body>
+</html>

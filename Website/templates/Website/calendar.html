@@ -1,0 +1,194 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Basic meta tags for character encoding and responsive design -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Race Calendar - intoAfrica Racing</title>
+    <!-- External CSS libraries from CDN -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.5/font/bootstrap-icons.min.css" rel="stylesheet">
+    <!-- Custom CSS files loaded using Django's static files system -->
+    <link href="{% static 'css/style.css' %}" rel="stylesheet">
+    <!-- Calendar-specific stylesheet for specialized calendar styling -->
+    <link href="{% static 'css/calendar.css' %}" rel="stylesheet">
+</head>
+<body>
+    <!-- Navigation bar - sticky-top keeps it fixed at the top when scrolling -->
+    <nav class="navbar navbar-expand-lg navbar-dark sticky-top">
+        <div class="container">
+            <!-- Brand logo with link to homepage -->
+            <a class="navbar-brand" href="{% url 'index' %}">
+                <img src="{% static 'images/intoAfrica-logo.png' %}" alt="Into Africa Racing" height="65">
+            </a>
+            <!-- Mobile menu toggle button - appears on small screens -->
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <!-- Navigation links container - collapses on mobile -->
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <!-- ms-auto pushes the menu to the right side -->
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'index' %}">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'about' %}">About</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'team' %}">Team</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'gallery' %}">Gallery</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'news' %}">News</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'sponsors' %}">Sponsors</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'contact' %}">Contact</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    
+    <!-- Page Header - contains page title and breadcrumb navigation -->
+    <section class="page-header">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <h1>Race Calendar</h1>
+                    <!-- Breadcrumb navigation for better user orientation -->
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="{% url 'index' %}">Home</a></li>
+                            <li class="breadcrumb-item active" aria-current="page">Calendar</li>
+                        </ol>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Calendar Section - main content area displaying race events -->
+    <section class="calendar-section">
+        <div class="container">
+            <div class="calendar-container">
+                <!-- Dynamic year title using template variable -->
+                <h2 class="section-title text-center mb-4">{{ current_year }} Racing Schedule</h2>
+                
+                <!-- Conditional rendering based on whether events exist -->
+                {% if has_events %}
+                <!-- Responsive table wrapper to handle horizontal scrolling on small screens -->
+                <div class="table-responsive">
+                    <table class="table table-striped calendar-table">
+                        <thead>
+                            <tr>
+                                <th>Date</th>
+                                <th>Event</th>
+                                <th>Venue</th>
+                                <th>Round</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Loop through event data passed from Django view -->
+                            {% for event in events %}
+                            <!-- Special styling for upcoming events -->
+                            <tr {% if event.is_upcoming_event %}class="upcoming-event"{% endif %}>
+                                <td>
+                                    <!-- Styled date presentation with month and day -->
+                                    <div class="event-date">
+                                        <span class="month">{{ event.get_month_display }}</span>
+                                        <span class="day">{{ event.get_date_display }}</span>
+                                    </div>
+                                </td>
+                                <td>{{ event.title }}</td>
+                                <td>{{ event.venue }}, {{ event.location }}</td>
+                                <!-- Conditional display for round number -->
+                                <td>{% if event.round_number %}Round {{ event.round_number }}{% else %}-{% endif %}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                {% else %}
+                <!-- Fallback message when no events are scheduled -->
+                <div class="no-events-message text-center my-5">
+                    <div class="alert alert-info" role="alert">
+                        <!-- Info icon with spacing -->
+                        <i class="bi bi-info-circle me-2"></i>
+                        No races are currently scheduled. Please check back soon for our updated racing calendar!
+                    </div>
+                </div>
+                {% endif %}
+                
+            </div>
+        </div>
+    </section>
+    
+    <!-- Footer - contains company info, navigation links, and legal info -->
+    <footer class="footer">
+        <div class="container">
+            <div class="row">
+                <!-- Company info and social media section - takes 4 columns on large screens -->
+                <div class="col-lg-4 footer-section mb-4">
+                    <div class="footer-about">
+                        <!-- Stylized logo in footer with different colored text parts -->
+                        <div class="logo footer-logo">
+                            <span class="logo-into">into</span><span class="logo-africa">Africa</span> Racing
+                        </div>
+                        <p>Pioneering African motorsport excellence through innovation, talent development, and community engagement. From rally to circuit racing, we represent the future of racing in Africa.</p>
+                        <!-- Social media links with icons -->
+                        <div class="social-links">
+                            <a href="https://www.facebook.com/p/Into-Africa-Racing-61553970164368/?locale=en_GB" class="social-icon"><i class="bi bi-facebook"></i></a>
+                            <a href="https://www.instagram.com/intoafricaracing?igsh=MXFrNGE2dHBwOHlwNQ==" class="social-icon"><i class="bi bi-instagram"></i></a>
+                            <a href="https://www.youtube.com/@saesracing" class="social-icon"><i class="bi bi-youtube"></i></a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Site navigation links - takes 2 columns on large screens -->
+                <div class="col-md-4 col-lg-2 footer-section mb-4">
+                    <h3 class="footer-title">Navigation</h3>
+                    <ul class="footer-links">
+                        <li><a href="{% url 'index' %}">Home</a></li>
+                        <li><a href="{% url 'about' %}">About</a></li>
+                        <li><a href="{% url 'team' %}">Team</a></li>
+                        <li><a href="{% url 'gallery' %}">Gallery</a></li>
+                        <li><a href="{% url 'news' %}">News</a></li>
+                        <li><a href="{% url 'sponsors' %}">Sponsors</a></li>
+                        <li><a href="{% url 'calendar' %}">Calendar</a></li>
+                        <li><a href="{% url 'contact' %}">Contact</a></li>
+                    </ul>
+                </div>
+                
+                <!-- Legal links - takes 4 columns on large screens -->
+                <div class="col-md-4 col-lg-4 footer-section mb-4">
+                    <h3 class="footer-title">Legal</h3>
+                    <ul class="footer-links">
+                        <!-- Note: These are placeholder links currently pointing to homepage -->
+                        <li><a href="{% url 'index' %}">Terms & Conditions</a></li>
+                        <li><a href="{% url 'index' %}">Privacy Policy</a></li>
+                        <li><a href="{% url 'index' %}">Cookie Policy</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <!-- Copyright statement -->
+            <div class="copyright">
+                &copy; 2025 intoAfrica Racing. All Rights Reserved.
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript libraries loaded at the end for better performance -->
+    <!-- Bootstrap Bundle includes both Bootstrap JS and Popper.js required for dropdowns, modals, etc. -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    <!-- Custom JavaScript file loaded using Django's static files system -->
+    <script src="{% static 'js/main.js' %}"></script>
+</body>
+</html>

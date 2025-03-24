@@ -1,0 +1,338 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Basic meta tags for character encoding and responsive design -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us - intoAfrica Racing</title>
+    <!-- External CSS libraries from CDN -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.5/font/bootstrap-icons.min.css" rel="stylesheet">
+    <!-- Custom CSS file loaded using Django's static files system -->
+    <link href="{% static 'css/style.css' %}" rel="stylesheet"> 
+</head>
+<body>
+    <!-- Navigation bar - sticky-top keeps it fixed at the top when scrolling -->
+    <nav class="navbar navbar-expand-lg navbar-dark sticky-top">
+        <div class="container">
+            <!-- Brand logo with link to homepage -->
+            <a class="navbar-brand" href="{% url 'index' %}">
+                <img src="{% static 'images/intoAfrica-logo.png' %}" alt="Into Africa Racing" height="65">
+            </a>
+            <!-- Mobile menu toggle button -->
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <!-- Navigation links container - collapses on mobile -->
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <!-- ms-auto pushes the menu to the right side -->
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'index' %}">Home</a>
+                    </li>
+                    <!-- 'active' class highlights the current page in the navigation -->
+                    <li class="nav-item">
+                        <a class="nav-link active" href="{% url 'about' %}">About</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'team' %}">Team</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'gallery' %}">Gallery</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'news' %}">News</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'sponsors' %}">Sponsors</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'contact' %}">Contact</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    
+    <!-- Page Header - contains page title and breadcrumb navigation -->
+    <section class="page-header">
+        <div class="container">
+            <h1>About intoAfrica Racing</h1>
+            <!-- Breadcrumb navigation for better user orientation -->
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="{% url 'index' %}">Home</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">About</li>
+                </ol>
+            </nav>
+        </div>
+    </section>
+    
+    <!-- Company Story Section - introduces the racing team's history -->
+    <section class="about-story-section">
+        <div class="container">
+            <!-- Two-column layout using Bootstrap grid system -->
+            <div class="row align-items-center">
+                <!-- Left column - text content -->
+                <div class="col-lg-6">
+                    <div class="about-content">
+                        <h2 class="section-title">Our Racing Journey</h2>
+                        <!-- Lead paragraph with larger text for emphasis -->
+                        <p class="lead mb-4">Founded in 2020, intoAfrica Racing was born out of a passion to showcase African motorsport talent on the global stage.</p>
+                        <!-- Placeholder text - to be replaced with actual content -->
+                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus vehicula, metus at facilisis cursus, justo sapien varius purus, ac malesuada orci justo sit amet quam. Duis tempor auctor orci, non vulputate eros scelerisque nec.</p>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus vehicula, metus at facilisis cursus, justo sapien varius purus, ac malesuada orci justo sit amet quam. Sed ut imperdiet nunc. Nulla sollicitudin mi quis tincidunt tincidunt. Curabitur consequat felis id lectus sodales.</p>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus vehicula, metus at facilisis cursus, justo sapien varius purus, ac malesuada orci justo sit amet quam. Etiam mollis sem eget nunc efficitur, non euismod nunc vulputate. Vivamus a felis at augue fermentum feugiat.</p>
+                        
+                        <!-- Featured quote from founder with decorative elements -->
+                        <div class="founder-quote mt-5">
+                            <div class="quote-symbol"><i class="bi bi-quote"></i></div>
+                            <blockquote>Our mission is more than just winning races; it's about inspiring the next generation of African racing talent and proving that with the right resources and determination, African drivers can compete with the best in the world.</blockquote>
+                            <div class="quote-author">
+                                <strong>Xolile Letlaka</strong> - Founder & Team Principal
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Right column - image collage -->
+                <div class="col-lg-6">
+                    <div class="about-image-collage">
+                        <div class="row g-3">
+                            <!-- 2x2 image grid with a larger image at the bottom -->
+                            <div class="col-6">
+                                <div class="collage-image">
+                                    <img src="{% static 'images/about/about-1.jpg' %}" alt="intoAfrica Racing early days" class="img-fluid">
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="collage-image">
+                                    <img src="{% static 'images/about/about-2.jpg' %}" alt="Championship victory" class="img-fluid">
+                                </div>
+                            </div>
+                            <!-- Full-width image taking entire row -->
+                            <div class="col-12">
+                                <div class="collage-image main-image">
+                                    <img src="{% static 'images/about/about-3.jpg' %}" alt="Team celebration" class="img-fluid">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    
+    <!-- Vision and Mission Section - displays company values and goals -->
+    <section class="vision-mission-section">
+        <div class="container">
+            <div class="row">
+                <!-- Vision Box - left column -->
+                <div class="col-lg-6">
+                    <div class="vision-box">
+                        <!-- Icon for visual appeal -->
+                        <div class="vision-icon">
+                            <i class="bi bi-eye"></i>
+                        </div>
+                        <h3>Our Vision</h3>
+                        <p>To become the most competitive and innovative motorsport team in Africa, creating a legacy that inspires future generations of African racing talent and establishes the continent as a powerhouse in global motorsport.</p>
+                    </div>
+                </div>
+                <!-- Mission Box - right column -->
+                <div class="col-lg-6">
+                    <div class="mission-box">
+                        <div class="mission-icon">
+                            <i class="bi bi-flag"></i>
+                        </div>
+                        <h3>Our Mission</h3>
+                        <p>To discover, develop, and showcase African racing talent through world-class training, cutting-edge technology, and competitive racing across all motorsport disciplines, while promoting sustainable and innovative practices in motorsport.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Team Achievements Section - visual timeline of key milestones -->
+    <section class="achievements-section">
+        <div class="container">
+            <h2 class="section-title text-center">Team Achievements</h2>
+            <p class="text-center mb-5">Since our inception in 2020, intoAfrica Racing has written a remarkable chapter in African motorsport history</p>
+            
+            <!-- Timeline layout for achievements by year -->
+            <div class="timeline">
+                <!-- Timeline item - 2020 -->
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <div class="timeline-date">2020</div>
+                        <h3>Team Foundation</h3>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                        <ul>
+                            <li>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</li>
+                            <li>Sed do eiusmod tempor incididunt ut labore et dolore magna.</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <!-- Timeline item - 2021 (right-aligned) -->
+                <div class="timeline-item right">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <div class="timeline-date">2021</div>
+                        <h3>Expansion & Growth</h3>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                        <ul>
+                            <li>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</li>
+                            <li>Sed do eiusmod tempor incididunt ut labore et dolore magna.</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <!-- Timeline item - 2022 -->
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <div class="timeline-date">2022</div>
+                        <h3>First Championship</h3>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                        <ul>
+                            <li>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</li>
+                            <li>Sed do eiusmod tempor incididunt ut labore et dolore magna.</li>
+                            <li>Ut enim ad minim veniam, quis nostrud exercitation ullamco.</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <!-- Timeline item - 2023 (right-aligned) -->
+                <div class="timeline-item right">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <div class="timeline-date">2023</div>
+                        <h3>International Success</h3>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                        <ul>
+                            <li>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</li>
+                            <li>Sed do eiusmod tempor incididunt ut labore et dolore magna.</li>
+                            <li>Ut enim ad minim veniam, quis nostrud exercitation ullamco.</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <!-- Timeline item - 2024 -->
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <div class="timeline-date">2024</div>
+                        <h3>Domination</h3>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                        <ul>
+                            <li>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</li>
+                            <li>Sed do eiusmod tempor incididunt ut labore et dolore magna.</li>
+                            <li>Ut enim ad minim veniam, quis nostrud exercitation ullamco.</li>
+                            <li>Duis aute irure dolor in reprehenderit in voluptate velit.</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <!-- Timeline item - 2025 (right-aligned) -->
+                <div class="timeline-item right">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <div class="timeline-date">2025</div>
+                        <h3>New Horizons</h3>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                        <ul>
+                            <li>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</li>
+                            <li>Sed do eiusmod tempor incididunt ut labore et dolore magna.</li>
+                            <li>Ut enim ad minim veniam, quis nostrud exercitation ullamco.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    
+    
+    <!-- Call-to-Action Section - encourages visitor engagement -->
+    <section class="partner-cta-section">
+        <div class="container">
+            <div class="cta-content">
+                <h2>Join the intoAfrica Racing Journey</h2>
+                <p>As a leading racing team, we welcome opportunities to collaborate with sponsors, partners, and talented individuals who share our passion for motorsport. Explore ways to connect and become part of our journey.</p>
+                <div class="cta-buttons">
+                    <!-- Button linking to contact page for inquiries -->
+                    <a href="{% url 'contact' %}" class="cta-btn-outline">Contact Us</a>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Footer - contains contact info, navigation, and social media links -->
+    <footer class="footer">
+        <div class="container">
+            <div class="row">
+                <!-- Footer About Section - includes logo and brief description -->
+                <div class="col-lg-4 footer-section mb-4">
+                    <div class="footer-about">
+                        <!-- Stylized logo in footer -->
+                        <div class="logo footer-logo">
+                            <span class="logo-into">into</span><span class="logo-africa">Africa</span> Racing
+                        </div>
+                        <p>Pioneering African motorsport excellence through innovation, talent development, and community engagement. From rally to circuit racing, we represent the future of racing in Africa.</p>
+                        <!-- Social media links -->
+                        <div class="social-links">
+                            <a href="https://www.facebook.com/p/Into-Africa-Racing-61553970164368/?locale=en_GB" class="social-icon"><i class="bi bi-facebook"></i></a>
+                            <a href="https://www.instagram.com/intoafricaracing?igsh=MXFrNGE2dHBwOHlwNQ==" class="social-icon"><i class="bi bi-instagram"></i></a>
+                            <a href="https://www.youtube.com/@saesracing" class="social-icon"><i class="bi bi-youtube"></i></a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Footer Navigation Links - duplicate of main navigation for easy access -->
+                <div class="col-md-4 col-lg-2 footer-section mb-4">
+                    <h3 class="footer-title">Navigation</h3>
+                    <ul class="footer-links">
+                        <li><a href="{% url 'index' %}">Home</a></li>
+                        <li><a href="{% url 'about' %}">About</a></li>
+                        <li><a href="{% url 'team' %}">Team</a></li>
+                        <li><a href="{% url 'gallery' %}">Gallery</a></li>
+                        <li><a href="{% url 'news' %}">News</a></li>
+                        <li><a href="{% url 'sponsors' %}">Sponsors</a></li>
+                        <li><a href="{% url 'calendar' %}">Calendar</a></li>
+                        <li><a href="{% url 'contact' %}">Contact</a></li>
+                    </ul>
+                </div>
+                
+                
+                <!-- Contact Information - address and email with icons -->
+                <div class="col-md-4 col-lg-4 footer-section mb-4">
+                    <h3 class="footer-title">Contact Us</h3>
+                    <ul class="contact-info">
+                        <li>
+                            <i class="bi bi-geo-alt contact-icon"></i>
+                            <span>intoAfrica Racing HQ<br>12 Motorsport Avenue<br>Johannesburg, South Africa</span>
+                        </li>
+                        <li>
+                            <i class="bi bi-envelope contact-icon"></i>
+                            <span>info@intoafricaracing.com</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <!-- Copyright statement -->
+            <div class="copyright">
+                &copy; 2025 intoAfrica Racing. All Rights Reserved.
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript libraries loaded at the end for better performance -->
+    <!-- Bootstrap Bundle includes both Bootstrap JS and Popper.js required for dropdowns, modals, etc. -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    <!-- Custom JavaScript file loaded using Django's static files system -->
+    <script src="{% static 'js/main.js' %}"></script>
+</body>
+</html>

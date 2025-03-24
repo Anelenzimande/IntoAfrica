@@ -1,0 +1,229 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Basic meta tags for character encoding and responsive design -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gallery - intoAfrica Racing</title>
+    <!-- External CSS libraries from CDN -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.5/font/bootstrap-icons.min.css" rel="stylesheet">
+    <!-- Lightbox CSS - specialized library for displaying images in an overlay -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/css/lightbox.min.css" rel="stylesheet">
+    <!-- Custom CSS files loaded using Django's static files system -->
+    <link href="{% static 'css/style.css' %}" rel="stylesheet">
+    <!-- Gallery-specific stylesheet for custom gallery styling -->
+    <link href="{% static 'css/gallery.css' %}" rel="stylesheet">
+</head>
+<body>
+    <!-- Navigation bar - sticky-top keeps it fixed at the top when scrolling -->
+    <nav class="navbar navbar-expand-lg navbar-dark sticky-top">
+        <div class="container">
+            <!-- Brand logo with link to homepage -->
+            <a class="navbar-brand" href="{% url 'index' %}">
+                <img src="{% static 'images/intoAfrica-logo.png' %}" alt="Into Africa Racing" height="65">
+            </a>
+            <!-- Mobile menu toggle button - appears on small screens -->
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <!-- Navigation links container - collapses on mobile -->
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <!-- ms-auto pushes the menu to the right side -->
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'index' %}">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'about' %}">About</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'team' %}">Team</a>
+                    </li>
+                    <!-- 'active' class highlights the current page in the navigation -->
+                    <li class="nav-item">
+                        <a class="nav-link active" href="{% url 'gallery' %}">Gallery</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'news' %}">News</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'sponsors' %}">Sponsors</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'contact' %}">Contact</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    
+    <!-- Note: Page Header section seems to be missing in this template -->
+    
+    <!-- Gallery Section - main content area with filterable image grid -->
+    <section class="gallery-section">
+        <div class="container">
+            <!-- Gallery Filter - interactive category buttons for filtering images -->
+            <div class="gallery-filter">
+                <!-- Default "All" filter button, initially active -->
+                <button class="filter-btn active" data-filter="all">All</button>
+                <!-- Dynamic category filter buttons generated from database -->
+                {% for category in categories %}
+                <button class="filter-btn" data-filter="{{ category.slug }}">{{ category.name }}</button>
+                {% endfor %}
+            </div>
+            
+            <!-- Gallery Grid - responsive image layout using Bootstrap grid system -->
+            <div class="row gallery-grid">
+                <!-- Conditional rendering based on whether images exist -->
+                {% if has_images %}
+                    <!-- Loop through image data passed from Django view -->
+                    {% for image in images %}
+                    <!-- Each image is in a column that's full width on small screens, 
+                         half width on medium screens, and one-third width on large screens -->
+                    <div class="col-md-6 col-lg-4 gallery-item {{ image.category.slug }}">
+                        <div class="gallery-card">
+                            <!-- Lightbox link - clicking opens the full image in a lightbox overlay -->
+                            <a href="{{ image.image.url }}" data-lightbox="gallery" data-title="{{ image.title }}">
+                                <!-- Responsive image that fills its container -->
+                                <img src="{{ image.image.url }}" alt="{{ image.title }}" class="img-fluid">
+                                <!-- Overlay that appears on hover with image details -->
+                                <div class="gallery-overlay">
+                                    <div class="gallery-info">
+                                        <h3>{{ image.title }}</h3>
+                                        <!-- Conditional display of description if it exists -->
+                                        {% if image.description %}
+                                        <p>{{ image.description }}</p>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                    {% endfor %}
+                {% else %}
+                    <!-- Fallback message when no images are available -->
+                    <div class="col-12 text-center no-images-message">
+                        <div class="alert alert-info" role="alert">
+                            <i class="bi bi-info-circle me-2"></i>
+                            No images are currently available in our gallery. Please check back soon!
+                        </div>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </section>
+    
+    <!-- Footer - contains company info, navigation links, and contact info -->
+    <footer class="footer">
+        <div class="container">
+            <div class="row">
+                <!-- Company info and social media section - takes 4 columns on large screens -->
+                <div class="col-lg-4 footer-section mb-4">
+                    <div class="footer-about">
+                        <!-- Stylized logo in footer with different colored text parts -->
+                        <div class="logo footer-logo">
+                            <span class="logo-into">into</span><span class="logo-africa">Africa</span> Racing
+                        </div>
+                        <p>Pioneering African motorsport excellence through innovation, talent development, and community engagement. From rally to circuit racing, we represent the future of racing in Africa.</p>
+                        <!-- Social media links with icons -->
+                        <div class="social-links">
+                            <a href="https://www.facebook.com/p/Into-Africa-Racing-61553970164368/?locale=en_GB" class="social-icon"><i class="bi bi-facebook"></i></a>
+                            <a href="https://www.instagram.com/intoafricaracing?igsh=MXFrNGE2dHBwOHlwNQ==" class="social-icon"><i class="bi bi-instagram"></i></a>
+                            <a href="https://www.youtube.com/@saesracing" class="social-icon"><i class="bi bi-youtube"></i></a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Site navigation links - takes 2 columns on large screens -->
+                <div class="col-md-4 col-lg-2 footer-section mb-4">
+                    <h3 class="footer-title">Navigation</h3>
+                    <ul class="footer-links">
+                        <li><a href="{% url 'index' %}">Home</a></li>
+                        <li><a href="{% url 'about' %}">About</a></li>
+                        <li><a href="{% url 'team' %}">Team</a></li>
+                        <li><a href="{% url 'gallery' %}">Gallery</a></li>
+                        <li><a href="{% url 'news' %}">News</a></li>
+                        <li><a href="{% url 'sponsors' %}">Sponsors</a></li>
+                        <li><a href="{% url 'calendar' %}">Calendar</a></li>
+                        <li><a href="{% url 'contact' %}">Contact</a></li>
+                    </ul>
+                </div>
+                
+                
+                <!-- Contact Information section - takes 4 columns on large screens -->
+                <div class="col-md-4 col-lg-4 footer-section mb-4">
+                    <h3 class="footer-title">Contact Us</h3>
+                    <ul class="contact-info">
+                        <li>
+                            <!-- Location icon with address -->
+                            <i class="bi bi-geo-alt contact-icon"></i>
+                            <span>intoAfrica Racing HQ<br>12 Motorsport Avenue<br>Johannesburg, South Africa</span>
+                        </li>
+                        <li>
+                            <!-- Email icon with email address -->
+                            <i class="bi bi-envelope contact-icon"></i>
+                            <span>info@intoafricaracing.com</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <!-- Copyright statement -->
+            <div class="copyright">
+                &copy; 2025 intoAfrica Racing. All Rights Reserved.
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript libraries loaded at the end for better performance -->
+    <!-- Bootstrap Bundle includes both Bootstrap JS and Popper.js required for dropdowns, modals, etc. -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    <!-- Lightbox JS library for image overlay functionality -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/js/lightbox.min.js"></script>
+    <!-- Custom JavaScript file loaded using Django's static files system -->
+    <script src="{% static 'js/main.js' %}"></script>
+    
+    <!-- Inline JavaScript for gallery filtering functionality -->
+    <script>
+        // Gallery filtering functionality - initializes when DOM is fully loaded
+        document.addEventListener('DOMContentLoaded', function() {
+            // Get all filter buttons and gallery items
+            const filterBtns = document.querySelectorAll('.filter-btn');
+            const galleryItems = document.querySelectorAll('.gallery-item');
+            
+            // Add click event listeners to each filter button
+            filterBtns.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    // Remove active class from all buttons (visual indication of selected filter)
+                    filterBtns.forEach(btn => btn.classList.remove('active'));
+                    // Add active class to clicked button
+                    this.classList.add('active');
+                    
+                    // Get the filter value from data-filter attribute
+                    const filterValue = this.getAttribute('data-filter');
+                    
+                    // Show/hide gallery items based on filter selection
+                    galleryItems.forEach(item => {
+                        if (filterValue === 'all' || item.classList.contains(filterValue)) {
+                            // Show items that match the filter or if "All" is selected
+                            item.style.display = 'block';
+                        } else {
+                            // Hide items that don't match the filter
+                            item.style.display = 'none';
+                        }
+                    });
+                });
+            });
+            
+            // Lightbox configuration - settings for the image overlay functionality
+            lightbox.option({
+                'resizeDuration': 200,         // Speed of resizing images (milliseconds)
+                'wrapAround': true,            // Allow cycling through images
+                'showImageNumberLabel': false  // Hide image numbers (e.g. "Image 2 of 8")
+            });
+        });
+    </script>
+</body>
+</html>

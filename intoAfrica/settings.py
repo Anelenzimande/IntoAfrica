@@ -25,14 +25,13 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.environ.get("SECRET_KEY")
+SECRET_KEY = 'django-insecure-ktt(%g%j+ri3)-*b40$^72gnezfjshlg8)6v5ne62q$z4&96p#'
 
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.environ.get("DEBUG", "False").lower() == "true"
+DEBUG = True
 
-ALLOWED_HOSTS = os.environ.get(
-    "ALLOWED_HOSTS", "localhost https://intoafrica.onrender.com").split(" ")
+ALLOWED_HOSTS = []
 
 
 # Application definition
@@ -89,8 +88,9 @@ DATABASES = {
 }
 
 # Postgres SQL Database
-dj_database_url = os.environ.get("DATABASE_URL")
-DATABASES["default"] = dj_database_url.parse(dj_database_url)
+
+DATABASES["default"] = dj_database_url.parse(
+    "postgresql://intoafrica_racing_user:dbzj896sKiFsSvj7l5XFYGwNUcoHyzIm@dpg-cvh5fnpopnds73b15rm0-a.oregon-postgres.render.com/intoafrica_racing")
 
 
 # Password validation

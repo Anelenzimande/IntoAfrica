@@ -29,7 +29,7 @@ SECRET_KEY = 'django-insecure-ktt(%g%j+ri3)-*b40$^72gnezfjshlg8)6v5ne62q$z4&96p#
 
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['localhost', 'intoafrica.onrender.com']
 
